@@ -1,0 +1,42 @@
+{
+  "32779257561137@lid": {
+    "phone": "32779257561137@lid",
+    "state": "WELCOME",
+    "serviceId": null,
+    "subOptionId": null,
+    "specificDetails": null,
+    "leadData": {},
+    "currentLeadStepIndex": 0,
+    "language": "en"
+  },
+  "111523221471395@lid": {
+    "phone": "111523221471395@lid",
+    "state": "COLLECTING_SPECIFIC_DETAILS",
+    "serviceId": 1,
+    "subOptionId": 4,
+    "specificDetails": null,
+    "leadData": {},
+    "currentLeadStepIndex": 0,
+    "language": "mr"
+  },
+  "113352944648214@lid": {
+    "phone": "113352944648214@lid",
+    "state": "SELECT_LANGUAGE",
+    "serviceId": null,
+    "subOptionId": null,
+    "specificDetails": null,
+    "leadData": {},
+    "currentLeadStepIndex": 0,
+    "language": "en"
+  },
+  "259789904941310@lid": {
+    "phone": "259789904941310@lid",
+    "state": "COLLECTING_LEAD_DATA",
+    "serviceId": 1,
+    "subOptionId": 1,
+    "specificDetails": "Medical",
+    "leadData": {},
+    "currentLeadStepIndex": 0,
+    "language": "en"
+  }
+}

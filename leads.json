@@ -1,0 +1,70 @@
+[
+  {
+    "id": "lead_1784796791989",
+    "timestamp": "2026-07-23T08:53:11.989Z",
+    "phone": "113352944648214@lid",
+    "language": "en",
+    "service": "Portfolio Website",
+    "subService": "Company Portfolio",
+    "specificDetails": "Akanksha pvt \nMarketing,  saas",
+    "leadInfo": {
+      "name": "Vaiishnav ghadehh"
+    }
+  },
+  {
+    "id": "lead_1784797190851",
+    "timestamp": "2026-07-23T08:59:50.851Z",
+    "phone": "113352944648214@lid",
+    "language": "en",
+    "service": "Web Development",
+    "subService": "Business Website",
+    "specificDetails": "Pvt\nIndustry \nYes",
+    "leadInfo": {
+      "name": "Vaishnav",
+      "company": "Svgpvt",
+      "budget": "20000"
+    }
+  },
+  {
+    "id": "lead_1784797272769",
+    "timestamp": "2026-07-23T09:01:12.769Z",
+    "phone": "113352944648214@lid",
+    "language": "en",
+    "service": "AI Agent Development",
+    "subService": "Customer Support Bot",
+    "specificDetails": "Web",
+    "leadInfo": {
+      "name": "Vaishnav",
+      "company": "Xyz limited",
+      "budget": "10000"
+    }
+  },
+  {
+    "id": "lead_1784800530973",
+    "timestamp": "2026-07-23T09:55:30.973Z",
+    "phone": "113352944648214@lid",
+    "language": "en",
+    "service": "Contact Vaishnav",
+    "subService": "Contact Request",
+    "specificDetails": "Requested callback/email via Contact details option",
+    "leadInfo": {
+      "name": "Akanksha",
+      "company": "Xxx",
+      "budget": "10000"
+    }
+  },
+  {
+    "id": "lead_1784802133962",
+    "timestamp": "2026-07-23T10:22:13.962Z",
+    "phone": "234780192960723@lid",
+    "language": "mr",
+    "service": "Web Development",
+    "subService": "Business Website",
+    "specificDetails": "SARVO PRIME\nSoftware Development \nNahi",
+    "leadInfo": {
+      "name": "Om Anil Kolekar",
+      "company": "SARVO PRIME",
+      "budget": "10000000"
+    }
+  }
+]
