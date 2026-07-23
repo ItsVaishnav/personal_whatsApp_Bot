@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import http from 'http';
 import pkg from 'whatsapp-web.js';
 const { Client, LocalAuth } = pkg;
 import qrcode from 'qrcode-terminal';
@@ -20,8 +21,10 @@ const getChromePath = () => {
     return null;
 };
 
-const chromePath = getChromePath();
-if (!chromePath) {
+const chromePath = process.env.PUPPETEER_EXECUTABLE_PATH || getChromePath();
+if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+    console.log(`[System] Using Puppeteer executable path from env: ${chromePath}`);
+} else if (!chromePath) {
     console.warn('[Warning] Google Chrome was not found in standard installation paths. whatsapp-web.js might fail to launch if Puppeteer chromium download is missing.');
 } else {
     console.log(`[System] Found Google Chrome at: ${chromePath}`);
@@ -120,4 +123,14 @@ client.on('message_create', async (message) => {
 console.log('[System] Initializing WhatsApp client...');
 client.initialize().catch((err) => {
     console.error('[Error] Failed to initialize client:', err);
+});
+
+// Create a basic HTTP server to satisfy Render's port-binding health-check
+const port = process.env.PORT || 10000;
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('WhatsApp Bot is running...\n');
+});
+server.listen(port, '0.0.0.0', () => {
+    console.log(`[System] Web server listening on port ${port}`);
 });
