@@ -19,16 +19,6 @@
     "currentLeadStepIndex": 0,
     "language": "mr"
   },
-  "113352944648214@lid": {
-    "phone": "113352944648214@lid",
-    "state": "SELECT_LANGUAGE",
-    "serviceId": null,
-    "subOptionId": null,
-    "specificDetails": null,
-    "leadData": {},
-    "currentLeadStepIndex": 0,
-    "language": "en"
-  },
   "259789904941310@lid": {
     "phone": "259789904941310@lid",
     "state": "COLLECTING_LEAD_DATA",
@@ -38,5 +28,15 @@
     "leadData": {},
     "currentLeadStepIndex": 0,
     "language": "en"
+  },
+  "113352944648214@lid": {
+    "phone": "113352944648214@lid",
+    "state": "MAIN_MENU",
+    "serviceId": null,
+    "subOptionId": null,
+    "specificDetails": null,
+    "leadData": {},
+    "currentLeadStepIndex": 0,
+    "language": "mr"
   }
 }
