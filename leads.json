@@ -66,5 +66,19 @@
       "company": "SARVO PRIME",
       "budget": "10000000"
     }
+  },
+  {
+    "id": "lead_1784871783981",
+    "timestamp": "2026-07-24T05:43:03.981Z",
+    "phone": "191882109939960@lid",
+    "language": "en",
+    "service": "Web Development",
+    "subService": "Business Website",
+    "specificDetails": "Sarvo",
+    "leadInfo": {
+      "name": "Vaishnav",
+      "company": "Sarvoprime",
+      "budget": "10000"
+    }
   }
 ]

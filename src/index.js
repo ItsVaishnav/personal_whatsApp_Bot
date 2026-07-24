@@ -2,7 +2,42 @@ import fs from 'fs';
 import path from 'path';
 import http from 'http';
 import pkg from 'whatsapp-web.js';
-const { Client, LocalAuth } = pkg;
+const { Client, LocalAuth, Events } = pkg;
+
+// Monkey-patch _registerFramenavigatedHandler to catch "Execution context was destroyed" errors during navigation
+Client.prototype._registerFramenavigatedHandler = function() {
+    if (this._framenavigatedRegistered) return;
+    this._framenavigatedRegistered = true;
+
+    this.pupPage.on('framenavigated', async (frame) => {
+        if (frame.parentFrame() !== null) return;
+
+        try {
+            const isLogout =
+                frame.url().includes('post_logout=1') || this.lastLoggedOut;
+
+            if (isLogout) {
+                this.emit(Events.DISCONNECTED, 'LOGOUT');
+                await this.authStrategy.logout();
+                await this.authStrategy.beforeBrowserInitialized();
+                await this.authStrategy.afterBrowserInitialized();
+                this.lastLoggedOut = false;
+            }
+
+            const storeAvailable = await this.pupPage.evaluate(() => {
+                return typeof window.WWebJS !== 'undefined';
+            }).catch(() => false);
+
+            if (!isLogout && storeAvailable) return;
+
+            await this.inject();
+        } catch (err) {
+            if (!err.message.includes('Execution context was destroyed') && !err.message.includes('Navigating')) {
+                console.error('[Warning] Error in framenavigated handler:', err);
+            }
+        }
+    });
+};
 import qrcode from 'qrcode-terminal';
 import { handleMessage } from './handlers/message.js';
 
@@ -33,6 +68,11 @@ if (process.env.PUPPETEER_EXECUTABLE_PATH) {
 // Initialize the WhatsApp Client
 const client = new Client({
     authStrategy: new LocalAuth(),
+    webVersionCache: {
+        type: 'remote',
+        remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/{version}.html',
+        strict: false
+    },
     puppeteer: {
         headless: true, // Run in background
         handleSIGINT: false,
@@ -44,7 +84,35 @@ const client = new Client({
             '--disable-gpu',
             '--no-first-run',
             '--no-zygote',
-            '--disable-extensions'
+            '--disable-extensions',
+            '--disable-audio-output',        // Disable audio process
+            '--disable-background-networking',
+            '--disable-background-timer-throttling',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-breakpad',            // Disable crash reporting
+            '--disable-client-side-phishing-detection',
+            '--disable-component-update',
+            '--disable-default-apps',
+            '--disable-domain-reliability',
+            '--disable-features=AudioServiceOutOfProcess',
+            '--disable-hang-monitor',
+            '--disable-ipc-flooding-protection',
+            '--disable-notifications',
+            '--disable-offer-store-unmasked-wallet-cards',
+            '--disable-popup-blocking',
+            '--disable-print-preview',
+            '--disable-prompt-on-repost',
+            '--disable-renderer-backgrounding',
+            '--disable-speech-api',
+            '--disable-sync',
+            '--hide-scrollbars',
+            '--ignore-gpu-blacklist',
+            '--metrics-recording-only',
+            '--mute-audio',
+            '--no-default-browser-check',
+            '--no-pings',
+            '--password-store=basic',
+            '--use-gl=swiftshader'
         ]
     }
 });
@@ -106,11 +174,28 @@ client.on('message_create', async (message) => {
         }
     }
 
-    // Wrap the message.reply function to automatically track the reply's ID
+    // Wrap the message.reply function to automatically track the reply's ID and simulate human typing
     const originalReply = message.reply;
     message.reply = async function(text, ...args) {
         try {
+            const chat = await message.getChat().catch(() => null);
+            if (chat) {
+                // Show "typing..." state
+                await chat.sendStateTyping().catch(() => {});
+                
+                // Calculate dynamic human-like typing delay (e.g. 25ms per character, min 800ms, max 3000ms)
+                const charCount = typeof text === 'string' ? text.length : 50;
+                const delay = Math.min(Math.max(charCount * 25, 800), 3000);
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+
             const sent = await originalReply.call(this, text, ...args);
+
+            if (chat) {
+                // Stop showing "typing..." state
+                await chat.clearState().catch(() => {});
+            }
+
             if (sent && sent.id) {
                 sentMessageIds.add(sent.id.id);
             }
