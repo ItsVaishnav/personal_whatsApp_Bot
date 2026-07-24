@@ -42,19 +42,43 @@ import qrcode from 'qrcode-terminal';
 import { handleMessage } from './handlers/message.js';
 
 // Locate local Chrome executable on Windows
+// Locate Chrome executable (Windows + Linux)
 const getChromePath = () => {
-    const paths = [
-        'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-        'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
-        path.join(process.env.USERPROFILE || '', 'AppData\\Local\\Google\\Chrome\\Application\\chrome.exe')
+    // Oracle Cloud / Linux
+    if (process.platform === "linux") {
+        const linuxPaths = [
+            "/usr/bin/google-chrome",
+            "/usr/bin/google-chrome-stable",
+            "/usr/bin/chromium-browser",
+            "/usr/bin/chromium"
+        ];
+
+        for (const p of linuxPaths) {
+            if (fs.existsSync(p)) {
+                return p;
+            }
+        }
+    }
+
+    // Windows
+    const windowsPaths = [
+        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+        path.join(
+            process.env.USERPROFILE || "",
+            "AppData\\Local\\Google\\Chrome\\Application\\chrome.exe"
+        )
     ];
-    for (const p of paths) {
+
+    for (const p of windowsPaths) {
         if (fs.existsSync(p)) {
             return p;
         }
     }
+
     return null;
 };
+
 
 const chromePath = process.env.PUPPETEER_EXECUTABLE_PATH || getChromePath();
 if (process.env.PUPPETEER_EXECUTABLE_PATH) {

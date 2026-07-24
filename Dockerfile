@@ -29,4 +29,5 @@ COPY . .
 EXPOSE 10000
 
 # Start command
-CMD ["node", "src/index.js"]
+CMD ["node", "--max-old-space-size=250", "src/index.js"]
+
