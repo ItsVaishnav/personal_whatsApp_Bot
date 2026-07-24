@@ -23,7 +23,7 @@ export async function handleMessage(message, client) {
     const explicitReset = bodyLower === 'reset' || bodyLower === 'menu';
 
     // Check for greeting wake-up triggers (only active if session is not in middle of form)
-    const isInactive = session.state === 'WELCOME' || session.state === 'SELECT_LANGUAGE';
+    const isInactive = session.state === 'WELCOME' || session.state === 'SELECT_LANGUAGE' || session.state === 'MAIN_MENU' || session.state === 'SUBMENU_SELECT';
     const greetingRegex = /\b(hi+|hello+|hey+|namaste|नमस्कार|नमस्ते|vaishnav)\b/i;
     const isGreeting = isInactive && greetingRegex.test(bodyLower);
 

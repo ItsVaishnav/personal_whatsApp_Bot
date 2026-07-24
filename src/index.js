@@ -32,7 +32,9 @@ Client.prototype._registerFramenavigatedHandler = function() {
 
             await this.inject();
         } catch (err) {
-            if (!err.message.includes('Execution context was destroyed') && !err.message.includes('Navigating')) {
+            if (err.message.includes('EBUSY') && err.message.includes('.wwebjs_auth')) {
+                console.warn('[Warning] Unable to clean up session files because they are locked by the active browser process (expected on Windows). To log out or reset, stop the bot and manually delete the .wwebjs_auth folder.');
+            } else if (!err.message.includes('Execution context was destroyed') && !err.message.includes('Navigating')) {
                 console.error('[Warning] Error in framenavigated handler:', err);
             }
         }

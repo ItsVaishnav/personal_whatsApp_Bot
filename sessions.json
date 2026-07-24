@@ -29,16 +29,6 @@
     "currentLeadStepIndex": 0,
     "language": "en"
   },
-  "113352944648214@lid": {
-    "phone": "113352944648214@lid",
-    "state": "MAIN_MENU",
-    "serviceId": null,
-    "subOptionId": null,
-    "specificDetails": null,
-    "leadData": {},
-    "currentLeadStepIndex": 0,
-    "language": "mr"
-  },
   "252226400473097@lid": {
     "phone": "252226400473097@lid",
     "state": "WELCOME",

@@ -80,5 +80,19 @@
       "company": "Sarvoprime",
       "budget": "10000"
     }
+  },
+  {
+    "id": "lead_1784911305220",
+    "timestamp": "2026-07-24T16:41:45.220Z",
+    "phone": "113352944648214@lid",
+    "language": "en",
+    "service": "Web Development",
+    "subService": "E-Commerce Website",
+    "specificDetails": "10 yes yes yes",
+    "leadInfo": {
+      "name": "Vaishhnav",
+      "company": "Nnnn",
+      "budget": "20000"
+    }
   }
 ]
