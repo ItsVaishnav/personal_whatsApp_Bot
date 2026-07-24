@@ -100,7 +100,7 @@ const client = new Client({
         strict: false
     },
     puppeteer: {
-        headless: true, // Run in background
+        headless: false, // Run in background
         handleSIGINT: false,
         executablePath: chromePath || undefined,
         args: [
